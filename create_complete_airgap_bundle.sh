@@ -14,12 +14,12 @@ BUNDLE_DIR="$HOME/grpc-airgap-complete"
 GRPC_VERSION="1.76.0"
 
 echo "This script creates a COMPLETE bundle including:"
-echo "  ✅ Pre-built binaries (Linux & Windows)"
-echo "  ✅ Source code (complete with all dependencies)"
-echo "  ✅ C++ example projects"
-echo "  ✅ Python example projects"
-echo "  ✅ Installation scripts"
-echo "  ✅ Documentation"
+echo "  Pre-built binaries (Linux & Windows)"
+echo "  Source code (complete with all dependencies)"
+echo "  C++ example projects"
+echo "  Python example projects"
+echo "  Installation scripts"
+echo "  Documentation"
 echo ""
 echo "Requirements:"
 echo "  - Internet connection (for downloads)"
@@ -43,7 +43,7 @@ mkdir -p "$BUNDLE_DIR/shared"
 
 cd "$BUNDLE_DIR"
 
-echo "✅ Structure created"
+echo "Structure created"
 
 # Download all sources (NO git!)
 echo ""
@@ -100,7 +100,7 @@ download_with_progress \
     "benchmark.zip" \
     "Benchmark"
 
-echo "✅ All sources downloaded"
+echo "All sources downloaded"
 
 # Assemble complete source tree
 echo ""
@@ -125,11 +125,11 @@ for dep in abseil-cpp protobuf re2 zlib benchmark boringssl-with-bazel; do
         echo "❌ ERROR: $dep is missing or empty!"
         exit 1
     fi
-    echo "  ✅ $dep"
+    echo "  $dep"
 done
-echo "  ✅ c-ares"
+echo "  c-ares"
 
-echo "✅ Complete source tree assembled"
+echo "Complete source tree assembled"
 
 # Build for Linux
 echo ""
@@ -155,7 +155,7 @@ cmake -DgRPC_INSTALL=ON \
 make -j$(nproc)
 make install
 
-echo "✅ Linux build complete"
+echo "Linux build complete"
 
 # Copy Linux binaries to bundle
 echo ""
@@ -163,7 +163,7 @@ echo "[5/10] Packaging Linux binaries..."
 
 cp -r "$LINUX_INSTALL"/* "$BUNDLE_DIR/linux-rhel8/binaries/"
 
-echo "✅ Linux binaries packaged"
+echo "Linux binaries packaged"
 
 # Package complete source
 echo ""
@@ -172,7 +172,7 @@ echo "[6/10] Packaging source archive..."
 cd /tmp/grpc-downloads
 tar -czf "$BUNDLE_DIR/linux-rhel8/source/grpc-v${GRPC_VERSION}-complete.tar.gz" grpc/
 
-echo "✅ Source archive created"
+echo "Source archive created"
 
 # Download Python wheels
 echo ""
@@ -184,7 +184,7 @@ pip3 download --dest "$BUNDLE_DIR/linux-rhel8/python-wheels" \
 pip3 download --dest "$BUNDLE_DIR/windows11/python-wheels" \
     grpcio==1.76.0 grpcio-tools==1.76.0 protobuf==5.29.3
 
-echo "✅ Python packages downloaded"
+echo "Python packages downloaded"
 
 # Create shared .proto file
 echo ""
@@ -332,7 +332,7 @@ with grpc.insecure_channel('localhost:50051') as channel:
     print(f"10 + 5 = {result.value}")
 EOF
 
-echo "✅ Example projects created"
+echo "Example projects created"
 
 # Create installation scripts
 echo ""
@@ -350,7 +350,7 @@ sudo cp -r binaries/include/* $INSTALL_DIR/include/
 sudo ldconfig
 echo "Installing Python packages..."
 pip3 install --no-index --find-links=python-wheels grpcio grpcio-tools protobuf
-echo "✅ Installation complete!"
+echo "Installation complete!"
 echo "Verify: protoc --version"
 EOF
 
@@ -360,14 +360,14 @@ chmod +x "$BUNDLE_DIR/linux-rhel8/install.sh"
 cat > "$BUNDLE_DIR/README.md" << 'EOF'
 # Complete Air-Gapped gRPC Bundle v1.76.0
 
-## 📦 Contents
+## Contents
 
 - `linux-rhel8/` - Complete RHEL 8 package
 - `windows11/` - Complete Windows 11 package  
 - `shared/` - Shared .proto files
 - `docs/` - Documentation
 
-## 🚀 Quick Start
+## Quick Start
 
 ### RHEL 8
 ```bash
@@ -383,7 +383,7 @@ cd windows11
 # See INSTALL_INSTRUCTIONS.txt
 ```
 
-## 📖 Documentation
+## Documentation
 
 See individual OS folders for detailed guides.
 
@@ -392,7 +392,7 @@ gRPC Version: 1.76.0
 No internet required after extraction!
 EOF
 
-echo "✅ Installation scripts created"
+echo "Installation scripts created"
 
 # Create final archive
 echo ""
@@ -405,19 +405,19 @@ FINAL_SIZE=$(du -sh "grpc-airgap-complete-v${GRPC_VERSION}.tar.gz" | cut -f1)
 
 echo ""
 echo "=========================================="
-echo "✅ COMPLETE!" | tee -a  summary.txt
+echo "COMPLETE!" | tee -a  summary.txt
 echo "==========================================" | tee -a summary.txt
 echo "Archive: grpc-airgap-complete-v${GRPC_VERSION}.tar.gz" | tee -a summary.txt
 echo "Size: $FINAL_SIZE" | tee -a summary.txt
 echo "Location: $HOME/grpc-airgap-complete-v${GRPC_VERSION}.tar.gz" | tee -a summary.txt
 echo "" | tee -a summary.txt
 echo "Contents:" | tee -a summary.txt
-echo "  ✅ Linux RHEL 8 binaries and examples" | tee -a summary.txt
-echo "  ✅ Windows 11 ready (vcpkg needed on target)" | tee -a summary.txt
-echo "  ✅ Python packages for both OS" | tee -a summary.txt
-echo "  ✅ Complete source code" | tee -a summary.txt
-echo "  ✅ Installation scripts" | tee -a summary.txt
-echo "  ✅ Working C++ and Python examples" | tee -a summary.txt
+echo "  Linux RHEL 8 binaries and examples" | tee -a summary.txt
+echo "  Windows 11 ready (vcpkg needed on target)" | tee -a summary.txt
+echo "  Python packages for both OS" | tee -a summary.txt
+echo "  Complete source code" | tee -a summary.txt
+echo "  Installation scripts" | tee -a summary.txt
+echo "  Working C++ and Python examples" | tee -a summary.txt
 echo "" | tee -a summary.txt
 echo "Transfer this file to your air-gapped network!" | tee -a summary.txt
 echo "==========================================" | tee -a summary.txt

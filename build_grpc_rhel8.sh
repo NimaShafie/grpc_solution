@@ -15,9 +15,9 @@ BUNDLE_DIR="$HOME/grpc-airgap-bundle"
 
 # Check RHEL version
 if [ -f /etc/redhat-release ]; then
-    echo "✅ Detected: $(cat /etc/redhat-release)"
+    echo "Detected: $(cat /etc/redhat-release)"
 else
-    echo "⚠️  Warning: Not running on RHEL"
+    echo " Warning: Not running on RHEL"
 fi
 
 echo ""
@@ -118,20 +118,20 @@ unzip -q ../benchmark.zip
 rm -rf third_party/benchmark
 mv benchmark-1.9.1 third_party/benchmark
 
-echo "✅ Complete source tree assembled"
+echo "Complete source tree assembled"
 
 # Verify all dependencies
 echo ""
 echo "Verifying dependencies..."
 for dir in abseil-cpp protobuf re2 zlib benchmark boringssl-with-bazel; do
     if [ -d "third_party/$dir" ] && [ "$(ls -A third_party/$dir)" ]; then
-        echo "  ✅ $dir"
+        echo "  $dir"
     else
-        echo "  ❌ $dir - MISSING OR EMPTY!"
+        echo "  $dir - MISSING OR EMPTY!"
         exit 1
     fi
 done
-echo "  ✅ c-ares"
+echo "  c-ares"
 
 # Build gRPC
 echo ""
@@ -158,7 +158,7 @@ echo "Building with $NPROC parallel jobs..."
 make -j$NPROC
 make install
 
-echo "✅ gRPC built and installed to $INSTALL_DIR"
+echo "gRPC built and installed to $INSTALL_DIR"
 
 # Create air-gapped bundle
 echo ""
@@ -183,7 +183,7 @@ cd "$BUNDLE_DIR/linux-rhel8/python-wheels"
 
 pip3 download grpcio==1.76.0 grpcio-tools==1.76.0 protobuf==5.29.3 --dest .
 
-echo "✅ Bundle created at $BUNDLE_DIR/linux-rhel8"
+echo "Bundle created at $BUNDLE_DIR/linux-rhel8"
 
 # Calculate sizes
 BINARIES_SIZE=$(du -sh "$BUNDLE_DIR/linux-rhel8/binaries" | cut -f1)
@@ -192,7 +192,7 @@ PYTHON_SIZE=$(du -sh "$BUNDLE_DIR/linux-rhel8/python-wheels" | cut -f1)
 
 echo ""
 echo "=========================================="
-echo "✅ BUILD COMPLETE!"
+echo "BUILD COMPLETE!"
 echo "=========================================="
 echo "Bundle location: $BUNDLE_DIR/linux-rhel8/"
 echo ""

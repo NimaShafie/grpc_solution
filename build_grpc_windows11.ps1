@@ -32,9 +32,9 @@ if (-not (Test-Path $VCPKG_DIR)) {
     git clone https://github.com/Microsoft/vcpkg.git
     Set-Location vcpkg
     .\bootstrap-vcpkg.bat
-    Write-Host "✅ vcpkg installed"
+    Write-Host " vcpkg installed"
 } else {
-    Write-Host "✅ vcpkg already installed"
+    Write-Host " vcpkg already installed"
 }
 
 # Install gRPC
@@ -47,9 +47,9 @@ Set-Location $VCPKG_DIR
 $grpcInstalled = & "$VCPKG_DIR\vcpkg.exe" list | Select-String "grpc:"
 if (-not $grpcInstalled) {
     & "$VCPKG_DIR\vcpkg.exe" install grpc:x64-windows
-    Write-Host "✅ gRPC installed"
+    Write-Host " gRPC installed"
 } else {
-    Write-Host "✅ gRPC already installed"
+    Write-Host " gRPC already installed"
 }
 
 # Export vcpkg installation (for air-gapped transfer)
@@ -58,7 +58,7 @@ Write-Host "[3/5] Exporting vcpkg packages..."
 
 & "$VCPKG_DIR\vcpkg.exe" export grpc:x64-windows --zip --output=grpc-windows-export
 
-Write-Host "✅ Export created"
+Write-Host " Export created"
 
 # Create air-gapped bundle structure
 Write-Host ""
@@ -102,7 +102,7 @@ $pythonSize = (Get-ChildItem "python-wheels" -Recurse | Measure-Object -Property
 
 Write-Host ""
 Write-Host "=========================================="
-Write-Host "✅ BUILD COMPLETE!" -ForegroundColor Green
+Write-Host "BUILD COMPLETE!" -ForegroundColor Green
 Write-Host "=========================================="
 Write-Host "Bundle location: $BUNDLE_DIR\windows11\"
 Write-Host ""
@@ -157,4 +157,4 @@ python -c "import grpc; print(grpc.__version__)"
 '@ | Out-File -FilePath "INSTALL_INSTRUCTIONS.txt" -Encoding UTF8
 
 Write-Host ""
-Write-Host "✅ Installation instructions created: INSTALL_INSTRUCTIONS.txt"
+Write-Host "Installation instructions created: INSTALL_INSTRUCTIONS.txt"
