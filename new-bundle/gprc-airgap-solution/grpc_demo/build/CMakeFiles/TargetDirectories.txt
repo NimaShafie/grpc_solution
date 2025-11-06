@@ -1,0 +1,4 @@
+C:/Users/n1mz/Desktop/gprc-airgap-solution/grpc_demo/build/CMakeFiles/calculator_protos.dir
+C:/Users/n1mz/Desktop/gprc-airgap-solution/grpc_demo/build/CMakeFiles/calculator_client.dir
+C:/Users/n1mz/Desktop/gprc-airgap-solution/grpc_demo/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/n1mz/Desktop/gprc-airgap-solution/grpc_demo/build/CMakeFiles/ZERO_CHECK.dir

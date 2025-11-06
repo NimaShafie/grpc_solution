@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package demo.calculator;
+
+message AddRequest {
+  double a = 1;
+  double b = 2;
+}
+
+message AddResponse {
+  double result = 1;
+}
+
+message Empty {}
+
+service Calculator {
+  rpc Add (AddRequest) returns (AddResponse);
+  rpc Ping (Empty) returns (Empty);
+}

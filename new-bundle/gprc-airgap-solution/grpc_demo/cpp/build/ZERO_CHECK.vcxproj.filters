@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="17.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <CustomBuild Include="C:\Users\n1mz\Desktop\gprc-airgap-solution\grpc_demo\cpp\build\CMakeFiles\c5b76157a1a83b9e05eff099e9f5eb11\generate.stamp.rule">
+      <Filter>CMake Rules</Filter>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="CMake Rules">
+      <UniqueIdentifier>{F1839C2F-2B9C-3B80-AFC2-AB8DA10DD9C7}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>

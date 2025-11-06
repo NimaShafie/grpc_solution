@@ -1,0 +1,6 @@
+# Python 3.14 (works with 3.10+); wheels must match your Python and OS
+protobuf==6.33.0
+grpcio==1.76.0
+grpcio-tools==1.76.0
+typing-extensions==4.15.0
+setuptools==80.9.0

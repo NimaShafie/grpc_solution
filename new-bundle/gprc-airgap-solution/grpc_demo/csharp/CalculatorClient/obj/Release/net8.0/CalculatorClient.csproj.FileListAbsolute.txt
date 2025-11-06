@@ -1,0 +1,5 @@
+C:\Users\n1mz\Desktop\gprc-airgap-solution\grpc_demo\csharp\CalculatorClient\obj\Release\net8.0\CalculatorClient.csproj.AssemblyReference.cache
+C:\Users\n1mz\Desktop\gprc-airgap-solution\grpc_demo\csharp\CalculatorClient\obj\Release\net8.0\CalculatorClient.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\n1mz\Desktop\gprc-airgap-solution\grpc_demo\csharp\CalculatorClient\obj\Release\net8.0\CalculatorClient.AssemblyInfoInputs.cache
+C:\Users\n1mz\Desktop\gprc-airgap-solution\grpc_demo\csharp\CalculatorClient\obj\Release\net8.0\CalculatorClient.AssemblyInfo.cs
+C:\Users\n1mz\Desktop\gprc-airgap-solution\grpc_demo\csharp\CalculatorClient\obj\Release\net8.0\CalculatorClient.csproj.CoreCompileInputs.cache
