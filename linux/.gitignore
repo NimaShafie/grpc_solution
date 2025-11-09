@@ -1,0 +1,11 @@
+# build outputs
+**/build/
+build/
+# cmake files
+CMakeCache.txt
+CMakeFiles/
+cmake_install.cmake
+Makefile
+# editor junk
+*.swp
+*.tmp
