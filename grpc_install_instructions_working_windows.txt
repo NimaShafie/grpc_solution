@@ -1,0 +1,123 @@
+# Run on "Developer PowerShell for VS 2022"
+
+
+# Create the directory (idempotent)
+$base = Join-Path $env:USERPROFILE 'Desktop\grpc_build_dir\cmake'
+New-Item -ItemType Directory -Force -Path $base | Out-Null
+
+
+
+# Set your install dir env var for this session
+$env:MY_INSTALL_DIR = $base
+
+
+
+# Add its bin to PATH for this session
+$env:Path += ";$env:MY_INSTALL_DIR\bin"
+
+
+
+# (optional) make sure the bin folder exists too
+New-Item -ItemType Directory -Force -Path "$env:MY_INSTALL_DIR\bin" | Out-Null
+
+
+
+# install cmake >= 3.16
+
+
+
+# clone grpc repo (w/ submodules)
+git clone --recurse-submodules -b v1.76.0 --depth 1 --shallow-submodules https://github.com/grpc/grpc
+
+
+
+# Build and install gRPC and Protocol Buffers
+# do this within the git clone of grpc
+mkdir "cmake\build"
+pushd "cmake\build"
+cmake -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF -DCMAKE_CXX_STANDARD=17 -DCMAKE_INSTALL_PREFIX=%MY_INSTALL_DIR% ..\..
+cmake --build . --config Release --target install -j 4
+popd
+
+# home computer uses MSVC 19.44.35217
+
+
+
+
+### followed this now
+# Fresh clone recommended (only once)
+cd $env:USERPROFILE\Desktop
+git clone --recurse-submodules https://github.com/grpc/grpc.git grpc
+cd grpc
+
+
+
+# Fresh build dir (don't use grpc\cmake\build)
+mkdir .build | Out-Null
+cd .build
+
+
+
+# Optional: where to install
+$env:MY_INSTALL_DIR = "$env:USERPROFILE\Desktop\grpc_install"
+mkdir "$env:MY_INSTALL_DIR\bin" -Force | Out-Null
+
+cmake -G "Visual Studio 17 2022" -A x64 `
+  -DCMAKE_CXX_STANDARD=17 `
+  -DgRPC_INSTALL=ON -DgRPC_BUILD_TESTS=OFF `
+  -DCMAKE_INSTALL_PREFIX="$env:MY_INSTALL_DIR" `
+  ..
+
+cmake --build . --config Release --target INSTALL
+
+
+
+
+# go to the sample protos
+cd $env:USERPROFILE\Desktop\grpc\examples\protos
+
+
+
+# make an output folder
+mkdir gen -Force | Out-Null
+
+
+
+# run protoc + gRPC plugin to generate C++ sources
+protoc -I . `
+  --cpp_out=gen `
+  --grpc_out=gen `
+  --plugin=protoc-gen-grpc="$env:MY_INSTALL_DIR\bin\grpc_cpp_plugin.exe" `
+  helloworld.proto
+
+# you should now have these files:
+# gen\helloworld.pb.h, gen\helloworld.pb.cc,
+# gen\helloworld.grpc.pb.h, gen\helloworld.grpc.pb.cc
+
+
+
+
+# configure against your installed gRPC
+cd $env:USERPROFILE\Desktop\grpc\examples\cpp\helloworld
+mkdir .build -Force | Out-Null
+cd .build
+
+cmake -G "Visual Studio 17 2022" -A x64 `
+  -DCMAKE_PREFIX_PATH="$env:MY_INSTALL_DIR" `
+  ..
+
+cmake --build . --config Release
+
+
+# run in terminal 1 (Developer PowerShell for VS 2022)
+cd "$env:USERPROFILE\Desktop\grpc\examples\cpp\helloworld\.build\Release"
+.\greeter_server.exe
+
+
+# run in terminal 2 (Developer PowerShell for VS 2022)
+cd "$env:USERPROFILE\Desktop\grpc\examples\cpp\helloworld\.build\Release"
+.\greeter_client.exe
+
+
+Expected: the client prints a greeting (e.g., “Greeter received: Hello world”) and the server logs a request.
+# total expected size of "grpc" folder after build = 6.2GB
